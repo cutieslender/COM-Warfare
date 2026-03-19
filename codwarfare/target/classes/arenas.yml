@@ -1,0 +1,23 @@
+arenas:
+  default:
+    world: "world"
+    lobby-spawn: { x: 0.5, y: 80.0, z: 0.5, yaw: 0.0, pitch: 0.0 }
+    ctf:
+      capture-radius: 2.5
+    red:
+      spawn: { x: 12.5, y: 80.0, z: 0.5, yaw: 180.0, pitch: 0.0 }
+      flag:  { x: 14.5, y: 80.0, z: 0.5, yaw: 180.0, pitch: 0.0 }
+    blue:
+      spawn: { x: -12.5, y: 80.0, z: 0.5, yaw: 0.0, pitch: 0.0 }
+      flag:  { x: -14.5, y: 80.0, z: 0.5, yaw: 0.0, pitch: 0.0 }
+  rust:
+    world: "world"
+    lobby-spawn: { x: 50.5, y: 80.0, z: 0.5, yaw: 0.0, pitch: 0.0 }
+    ctf:
+      capture-radius: 2.5
+    red:
+      spawn: { x: 62.5, y: 80.0, z: 0.5, yaw: 180.0, pitch: 0.0 }
+      flag:  { x: 64.5, y: 80.0, z: 0.5, yaw: 180.0, pitch: 0.0 }
+    blue:
+      spawn: { x: 38.5, y: 80.0, z: 0.5, yaw: 0.0, pitch: 0.0 }
+      flag:  { x: 36.5, y: 80.0, z: 0.5, yaw: 0.0, pitch: 0.0 }

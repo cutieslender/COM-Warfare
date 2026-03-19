@@ -1,0 +1,779 @@
+debug: false
+
+arena: "default"
+
+# Integrations reseau / mondes (Multiverse-Core = optionnel, softdepend).
+# HubCore lui-meme ne tourne en general pas sur le serveur minijeux : les stats passent par HubCore-BridgeSpigot.
+integrations:
+  multiverse:
+    # Si Bukkit.getWorld(name) echoue, tente Multiverse-Core (alias / nom MV).
+    resolve-worlds: true
+    warn-missing-world: true
+  bridge:
+    # Envoie kills+deaths au proxy via BridgeSyncAPI (meme logique que BrainFFA : sendKill / sendDeath).
+    sync-stats: true
+
+game:
+  mode: "tdm" # tdm, ffa, infect, ctf
+  players-per-team: 4
+  max-teams: 2
+  kills-to-win: 50
+  start-countdown-seconds: 10
+  respawn-delay-ticks: 40
+  void-y: -64.0
+  headshot-multiplier: 1.6
+  # Distance max (en blocs) entre le projectile et les yeux de la victime.
+  # Plus c'est petit, plus le headshot est difficile à valider.
+  headshot-distance: 0.9
+  ffa:
+    min-players: 4
+  ctf:
+    captures-to-win: 3
+    flag-respawn-delay-ticks: 600 # 30s
+  infect:
+    survivor-kills-to-win: 30
+
+queue:
+  auto-start: true
+
+loadout:
+  assault-rifle:
+    material: "IRON_HOE"
+    amount: 1
+    name: "&cAssault Rifle"
+  smg:
+    material: "GOLDEN_HOE"
+    amount: 1
+    name: "&eSMG"
+  sniper:
+    material: "DIAMOND_HOE"
+    amount: 1
+    name: "&bSniper"
+  secondary:
+    material: "STONE_HOE"
+    amount: 1
+    name: "&7Secondary"
+  ammo:
+    material: "ARROW"
+    amount: 64
+    name: "&eAmmo"
+  ak47:
+    material: "IRON_HOE"
+    amount: 1
+    name: "&cAK-47"
+  m4a1:
+    material: "IRON_HOE"
+    amount: 1
+    name: "&cM4A1"
+  famas:
+    material: "IRON_HOE"
+    amount: 1
+    name: "&cFAMAS"
+  mp5:
+    material: "GOLDEN_HOE"
+    amount: 1
+    name: "&eMP5"
+  ump45:
+    material: "GOLDEN_HOE"
+    amount: 1
+    name: "&eUMP45"
+  p90:
+    material: "GOLDEN_HOE"
+    amount: 1
+    name: "&eP90"
+  awp:
+    material: "DIAMOND_HOE"
+    amount: 1
+    name: "&bAWP"
+  intervention:
+    material: "DIAMOND_HOE"
+    amount: 1
+    name: "&bIntervention"
+  deagle:
+    material: "STONE_HOE"
+    amount: 1
+    name: "&7Deagle"
+  usp:
+    material: "STONE_HOE"
+    amount: 1
+    name: "&7USP"
+
+messages:
+  usage: "&cUsage: /cod <join|leave|armory|class|perk|votemap|admin|reload|debug>"
+  usage-setspawn: "&cUsage: /cod setspawn <red|blue>"
+  usage-setflag: "&cUsage: /cod setflag <red|blue>"
+  usage-class: "&cUsage: /cod class <assault|smg|sniper>"
+  usage-perk: "&cUsage: /cod perk <none|lightweight|scavenger|stopping_power>"
+  usage-votemap: "&cUsage: /cod votemap <arenaId>"
+  no-permission: "&cTu n'as pas la permission."
+  unknown-team: "&cEquipe inconnue. Utilise red/blue."
+  no-arena: "&cAucune arène valide chargée. Verifie arenas.yml puis /cod reload."
+  invalid-number: "&cValeur invalide."
+  unknown-class: "&cClasse inconnue."
+  unknown-perk: "&cPerk inconnu."
+  unknown-map: "&cMap inconnue."
+  class-selected: "&aClasse selectionnee: &e%class%"
+  weapon-selected: "&aArme selectionnee: &e%weapon%"
+  perk-selected: "&aPerk selectionne: &e%perk%"
+  map-voted: "&aVote map enregistre: &e%map%"
+
+  queue-joined: "&aTu as rejoint la queue COD. Position: &f%position%"
+  queue-left: "&7Tu as quitte la queue COD."
+  already-in-queue: "&eTu es deja dans la queue COD."
+  already-in-game: "&cTu es deja dans une partie COD."
+  not-in-queue-or-game: "&cTu n'es ni en queue ni en partie."
+
+  game-starting: "&eLa partie COD demarre dans &6%seconds%s&e."
+  game-started: "&aPartie COD demarree!"
+  kill-feed: "&c%killer% &7a elimine &c%victim% &8(&c%red_kills%&7-&9%blue_kills%&8)"
+  game-ended: "&aPartie terminee! Vainqueur: &e%winner%&a."
+  respawned: "&7Respawn..."
+  void-respawn: "&cTu es tombe dans le vide."
+
+  setspawn-ok: "&aSpawn equipe enregistre."
+  setflag-ok: "&aDrapeau equipe enregistre."
+  setlobby-ok: "&aSpawn lobby enregistre."
+  reload-ok: "&aCOD Warfare recharge."
+  debug-prefix: "&a[COD] "
+  ammo: "&7Ammo: &e%current%&7/&e%mag% &8| &7Reserve: &e%reserve%"
+  no-ammo: "&cPlus de munitions, recharge!"
+  reloading: "&eRechargement..."
+  reloaded: "&aArme rechargee."
+  headshot: "&6Headshot!"
+  uav-online: "&bUAV en ligne: ennemis -> %enemies%"
+  airstrike-ready: "&cAirstrike prete! Clic droit avec la baguette."
+  airstrike-called: "&cAirstrike deployee!"
+  infect-first: "&cTu es le premier infecte!"
+  infect-you: "&cTu as ete infecte!"
+  infect-convert: "&e%player% &7a ete infecte."
+  ctf-flag-picked: "&bTu as pris le drapeau ennemi!"
+  ctf-capture: "&6%player% &fa capture un drapeau! &8(&c%red%&7-&9%blue%&8)"
+  medkit-used: "&aMedkit utilise!"
+  stim-used: "&aStim utilise!"
+  grenade-used: "&cGrenade !"
+  knife-used: "&cKnife!"
+
+classes:
+  default: "assault"
+  assault:
+    primary: "assault-rifle"
+    secondary: "secondary"
+    armor:
+      helmet: "IRON_HELMET"
+      chest: "IRON_CHESTPLATE"
+      leggings: "IRON_LEGGINGS"
+      boots: "IRON_BOOTS"
+    equipment:
+      items:
+        0:
+          slot: 3
+          material: "IRON_SWORD"
+          amount: 1
+          name: "&fKnife"
+          lore:
+            - "&7Couteau de combat (cosmetique)"
+        1:
+          slot: 4
+          material: "GOLDEN_APPLE"
+          amount: 2
+          name: "&6Medkit"
+          lore:
+            - "&7Restauration manuelle"
+        2:
+          slot: 5
+          material: "SNOWBALL"
+          amount: 1
+          name: "&fGrenade"
+          lore:
+            - "&7Grenade tactique (zone)"
+        3:
+          slot: 6
+          material: "SLIME_BALL"
+          amount: 1
+          name: "&aStim"
+          lore:
+            - "&7Stimulation (speed + regen)"
+  smg:
+    primary: "smg"
+    secondary: "secondary"
+    armor:
+      helmet: "LEATHER_HELMET"
+      chest: "LEATHER_CHESTPLATE"
+      leggings: "LEATHER_LEGGINGS"
+      boots: "LEATHER_BOOTS"
+    equipment:
+      items:
+        0:
+          slot: 3
+          material: "STONE_SWORD"
+          amount: 1
+          name: "&fKnife"
+          lore:
+            - "&7Couteau de combat (cosmetique)"
+        1:
+          slot: 4
+          material: "GOLDEN_APPLE"
+          amount: 2
+          name: "&6Medkit"
+          lore:
+            - "&7Restauration manuelle"
+        2:
+          slot: 5
+          material: "SNOWBALL"
+          amount: 1
+          name: "&fGrenade"
+          lore:
+            - "&7Grenade tactique (zone)"
+        3:
+          slot: 6
+          material: "SLIME_BALL"
+          amount: 1
+          name: "&aStim"
+          lore:
+            - "&7Stimulation (speed + regen)"
+  sniper:
+    primary: "sniper"
+    secondary: "secondary"
+    armor:
+      helmet: "GOLDEN_HELMET"
+      chest: "GOLDEN_CHESTPLATE"
+      leggings: "GOLDEN_LEGGINGS"
+      boots: "GOLDEN_BOOTS"
+    equipment:
+      items:
+        0:
+          slot: 3
+          material: "DIAMOND_SWORD"
+          amount: 1
+          name: "&fKnife"
+          lore:
+            - "&7Couteau de combat (cosmetique)"
+        1:
+          slot: 4
+          material: "GOLDEN_APPLE"
+          amount: 2
+          name: "&6Medkit"
+          lore:
+            - "&7Restauration manuelle"
+        2:
+          slot: 5
+          material: "SNOWBALL"
+          amount: 1
+          name: "&fGrenade"
+          lore:
+            - "&7Grenade tactique (zone)"
+        3:
+          slot: 6
+          material: "SLIME_BALL"
+          amount: 1
+          name: "&aStim"
+          lore:
+            - "&7Stimulation (speed + regen)"
+  ak:
+    primary: "ak47"
+    secondary: "deagle"
+    armor:
+      helmet: "IRON_HELMET"
+      chest: "IRON_CHESTPLATE"
+      leggings: "IRON_LEGGINGS"
+      boots: "IRON_BOOTS"
+    equipment:
+      items:
+        0:
+          slot: 3
+          material: "IRON_SWORD"
+          amount: 1
+          name: "&fKnife"
+          lore:
+            - "&7Couteau de combat (cosmetique)"
+        1:
+          slot: 4
+          material: "GOLDEN_APPLE"
+          amount: 2
+          name: "&6Medkit"
+          lore:
+            - "&7Restauration manuelle"
+        2:
+          slot: 5
+          material: "SNOWBALL"
+          amount: 1
+          name: "&fGrenade"
+          lore:
+            - "&7Grenade tactique (zone)"
+        3:
+          slot: 6
+          material: "SLIME_BALL"
+          amount: 1
+          name: "&aStim"
+          lore:
+            - "&7Stimulation (speed + regen)"
+  m4:
+    primary: "m4a1"
+    secondary: "usp"
+    armor:
+      helmet: "IRON_HELMET"
+      chest: "IRON_CHESTPLATE"
+      leggings: "IRON_LEGGINGS"
+      boots: "IRON_BOOTS"
+    equipment:
+      items:
+        0:
+          slot: 3
+          material: "IRON_SWORD"
+          amount: 1
+          name: "&fKnife"
+          lore:
+            - "&7Couteau de combat (cosmetique)"
+        1:
+          slot: 4
+          material: "GOLDEN_APPLE"
+          amount: 2
+          name: "&6Medkit"
+          lore:
+            - "&7Restauration manuelle"
+        2:
+          slot: 5
+          material: "SNOWBALL"
+          amount: 1
+          name: "&fGrenade"
+          lore:
+            - "&7Grenade tactique (zone)"
+        3:
+          slot: 6
+          material: "SLIME_BALL"
+          amount: 1
+          name: "&aStim"
+          lore:
+            - "&7Stimulation (speed + regen)"
+  burst:
+    primary: "famas"
+    secondary: "usp"
+    armor:
+      helmet: "LEATHER_HELMET"
+      chest: "LEATHER_CHESTPLATE"
+      leggings: "LEATHER_LEGGINGS"
+      boots: "LEATHER_BOOTS"
+    equipment:
+      items:
+        0:
+          slot: 3
+          material: "STONE_SWORD"
+          amount: 1
+          name: "&fKnife"
+          lore:
+            - "&7Couteau de combat (cosmetique)"
+        1:
+          slot: 4
+          material: "GOLDEN_APPLE"
+          amount: 2
+          name: "&6Medkit"
+          lore:
+            - "&7Restauration manuelle"
+        2:
+          slot: 5
+          material: "SNOWBALL"
+          amount: 1
+          name: "&fGrenade"
+          lore:
+            - "&7Grenade tactique (zone)"
+        3:
+          slot: 6
+          material: "SLIME_BALL"
+          amount: 1
+          name: "&aStim"
+          lore:
+            - "&7Stimulation (speed + regen)"
+  run_n_gun:
+    primary: "mp5"
+    secondary: "deagle"
+    armor:
+      helmet: "LEATHER_HELMET"
+      chest: "LEATHER_CHESTPLATE"
+      leggings: "LEATHER_LEGGINGS"
+      boots: "LEATHER_BOOTS"
+    equipment:
+      items:
+        0:
+          slot: 3
+          material: "STONE_SWORD"
+          amount: 1
+          name: "&fKnife"
+          lore:
+            - "&7Couteau de combat (cosmetique)"
+        1:
+          slot: 4
+          material: "GOLDEN_APPLE"
+          amount: 2
+          name: "&6Medkit"
+          lore:
+            - "&7Restauration manuelle"
+        2:
+          slot: 5
+          material: "SNOWBALL"
+          amount: 1
+          name: "&fGrenade"
+          lore:
+            - "&7Grenade tactique (zone)"
+        3:
+          slot: 6
+          material: "SLIME_BALL"
+          amount: 1
+          name: "&aStim"
+          lore:
+            - "&7Stimulation (speed + regen)"
+  heavy_smg:
+    primary: "ump45"
+    secondary: "usp"
+    armor:
+      helmet: "CHAINMAIL_HELMET"
+      chest: "CHAINMAIL_CHESTPLATE"
+      leggings: "CHAINMAIL_LEGGINGS"
+      boots: "CHAINMAIL_BOOTS"
+    equipment:
+      items:
+        0:
+          slot: 3
+          material: "IRON_SWORD"
+          amount: 1
+          name: "&fKnife"
+          lore:
+            - "&7Couteau de combat (cosmetique)"
+        1:
+          slot: 4
+          material: "GOLDEN_APPLE"
+          amount: 2
+          name: "&6Medkit"
+          lore:
+            - "&7Restauration manuelle"
+        2:
+          slot: 5
+          material: "SNOWBALL"
+          amount: 1
+          name: "&fGrenade"
+          lore:
+            - "&7Grenade tactique (zone)"
+        3:
+          slot: 6
+          material: "SLIME_BALL"
+          amount: 1
+          name: "&aStim"
+          lore:
+            - "&7Stimulation (speed + regen)"
+  spray:
+    primary: "p90"
+    secondary: "usp"
+    armor:
+      helmet: "GOLDEN_HELMET"
+      chest: "GOLDEN_CHESTPLATE"
+      leggings: "GOLDEN_LEGGINGS"
+      boots: "GOLDEN_BOOTS"
+    equipment:
+      items:
+        0:
+          slot: 3
+          material: "GOLDEN_SWORD"
+          amount: 1
+          name: "&fKnife"
+          lore:
+            - "&7Couteau de combat (cosmetique)"
+        1:
+          slot: 4
+          material: "GOLDEN_APPLE"
+          amount: 2
+          name: "&6Medkit"
+          lore:
+            - "&7Restauration manuelle"
+        2:
+          slot: 5
+          material: "SNOWBALL"
+          amount: 1
+          name: "&fGrenade"
+          lore:
+            - "&7Grenade tactique (zone)"
+        3:
+          slot: 6
+          material: "SLIME_BALL"
+          amount: 1
+          name: "&aStim"
+          lore:
+            - "&7Stimulation (speed + regen)"
+  awp:
+    primary: "awp"
+    secondary: "deagle"
+    armor:
+      helmet: "DIAMOND_HELMET"
+      chest: "DIAMOND_CHESTPLATE"
+      leggings: "DIAMOND_LEGGINGS"
+      boots: "DIAMOND_BOOTS"
+    equipment:
+      items:
+        0:
+          slot: 3
+          material: "DIAMOND_SWORD"
+          amount: 1
+          name: "&fKnife"
+          lore:
+            - "&7Couteau de combat (cosmetique)"
+        1:
+          slot: 4
+          material: "GOLDEN_APPLE"
+          amount: 2
+          name: "&6Medkit"
+          lore:
+            - "&7Restauration manuelle"
+        2:
+          slot: 5
+          material: "SNOWBALL"
+          amount: 1
+          name: "&fGrenade"
+          lore:
+            - "&7Grenade tactique (zone)"
+        3:
+          slot: 6
+          material: "SLIME_BALL"
+          amount: 1
+          name: "&aStim"
+          lore:
+            - "&7Stimulation (speed + regen)"
+  intervention:
+    primary: "intervention"
+    secondary: "deagle"
+    armor:
+      helmet: "DIAMOND_HELMET"
+      chest: "DIAMOND_CHESTPLATE"
+      leggings: "DIAMOND_LEGGINGS"
+      boots: "DIAMOND_BOOTS"
+    equipment:
+      items:
+        0:
+          slot: 3
+          material: "DIAMOND_SWORD"
+          amount: 1
+          name: "&fKnife"
+          lore:
+            - "&7Couteau de combat (cosmetique)"
+        1:
+          slot: 4
+          material: "GOLDEN_APPLE"
+          amount: 2
+          name: "&6Medkit"
+          lore:
+            - "&7Restauration manuelle"
+        2:
+          slot: 5
+          material: "SNOWBALL"
+          amount: 1
+          name: "&fGrenade"
+          lore:
+            - "&7Grenade tactique (zone)"
+        3:
+          slot: 6
+          material: "SLIME_BALL"
+          amount: 1
+          name: "&aStim"
+          lore:
+            - "&7Stimulation (speed + regen)"
+
+weapons:
+  assault-rifle:
+    slot: primary
+    damage: 6.0
+    cooldown-ms: 250
+    range-max: 45.0
+    falloff-start: 18.0
+    projectile-speed: 2.5
+    magazine-size: 30
+    reserve-ammo: 120
+    reload-ticks: 30
+  smg:
+    slot: primary
+    damage: 4.0
+    cooldown-ms: 120
+    range-max: 30.0
+    falloff-start: 12.0
+    projectile-speed: 2.2
+    magazine-size: 40
+    reserve-ammo: 160
+    reload-ticks: 24
+  sniper:
+    slot: primary
+    damage: 12.0
+    cooldown-ms: 1100
+    range-max: 80.0
+    falloff-start: 35.0
+    projectile-speed: 3.2
+    magazine-size: 8
+    reserve-ammo: 32
+    reload-ticks: 50
+  secondary:
+    slot: secondary
+    damage: 4.0
+    cooldown-ms: 350
+    range-max: 35.0
+    falloff-start: 15.0
+    projectile-speed: 2.4
+    magazine-size: 12
+    reserve-ammo: 60
+    reload-ticks: 26
+  ak47:
+    slot: primary
+    damage: 7.0
+    cooldown-ms: 270
+    range-max: 48.0
+    falloff-start: 20.0
+    projectile-speed: 2.7
+    magazine-size: 30
+    reserve-ammo: 120
+    reload-ticks: 30
+  m4a1:
+    slot: primary
+    damage: 6.0
+    cooldown-ms: 240
+    range-max: 50.0
+    falloff-start: 22.0
+    projectile-speed: 2.7
+    magazine-size: 30
+    reserve-ammo: 120
+    reload-ticks: 28
+  famas:
+    slot: primary
+    damage: 5.6
+    cooldown-ms: 220
+    range-max: 46.0
+    falloff-start: 18.0
+    projectile-speed: 2.6
+    magazine-size: 30
+    reserve-ammo: 120
+    reload-ticks: 28
+  mp5:
+    slot: primary
+    damage: 4.5
+    cooldown-ms: 110
+    range-max: 32.0
+    falloff-start: 12.0
+    projectile-speed: 2.3
+    magazine-size: 40
+    reserve-ammo: 160
+    reload-ticks: 24
+  ump45:
+    slot: primary
+    damage: 5.0
+    cooldown-ms: 125
+    range-max: 34.0
+    falloff-start: 14.0
+    projectile-speed: 2.3
+    magazine-size: 35
+    reserve-ammo: 140
+    reload-ticks: 25
+  p90:
+    slot: primary
+    damage: 4.1
+    cooldown-ms: 95
+    range-max: 30.0
+    falloff-start: 10.0
+    projectile-speed: 2.2
+    magazine-size: 50
+    reserve-ammo: 200
+    reload-ticks: 22
+  awp:
+    slot: primary
+    damage: 13.0
+    cooldown-ms: 1200
+    range-max: 90.0
+    falloff-start: 40.0
+    projectile-speed: 3.3
+    magazine-size: 7
+    reserve-ammo: 28
+    reload-ticks: 55
+  intervention:
+    slot: primary
+    damage: 12.5
+    cooldown-ms: 1150
+    range-max: 85.0
+    falloff-start: 38.0
+    projectile-speed: 3.2
+    magazine-size: 8
+    reserve-ammo: 32
+    reload-ticks: 52
+  deagle:
+    slot: secondary
+    damage: 6.2
+    cooldown-ms: 360
+    range-max: 36.0
+    falloff-start: 16.0
+    projectile-speed: 2.5
+    magazine-size: 10
+    reserve-ammo: 60
+    reload-ticks: 24
+  usp:
+    slot: secondary
+    damage: 4.8
+    cooldown-ms: 280
+    range-max: 34.0
+    falloff-start: 14.0
+    projectile-speed: 2.5
+    magazine-size: 12
+    reserve-ammo: 72
+    reload-ticks: 24
+
+killstreaks:
+  uav: 3
+  airstrike: 5
+  airstrike-damage: 8.0
+  uav-duration-ticks: 200
+  uav-interval-ticks: 40
+  airstrike-radius: 6.0
+  airstrike-delay-ticks: 20
+  airstrike-target-range: 30
+  airstrike-y-offset: 0.0
+
+perks:
+  default: "none"
+  list:
+    lightweight:
+      walk-speed: 0.24
+    scavenger:
+      reserve-add-on-kill: 8
+    stopping_power:
+      damage-multiplier: 1.15
+
+medkit:
+  cooldown-ms: 15000
+  heal: 8.0
+  regen-ticks: 100
+  regen-amplifier: 1
+
+stim:
+  cooldown-ms: 20000
+  regen-ticks: 60
+  regen-amplifier: 1
+  speed-ticks: 120
+  speed-amplifier: 1
+
+grenade:
+  cooldown-ms: 30000
+  velocity: 1.6
+  fuse-ticks: 10
+  radius: 5.0
+  damage: 4.0
+  blindness-ticks: 40
+  slow-ticks: 60
+  slow-amplifier: 1
+
+knife:
+  cooldown-ms: 1500
+  damage: 6.0
+
+# Persistance des choix d'armure (classe/perk/primary/secondary).
+# - local: utilise loadouts.yml sur le serveur
+# - mysql: utilise une table MySQL dédiée `cod_loadouts` (shared entre serveurs)
+loadout-storage:
+  type: "mysql" # local, mysql
+  mysql:
+    enabled: true
+    host: "localhost"
+    port: 3306
+    database: "minecraft"
+    username: "invit"
+    password: ""
+    pool-size: 5

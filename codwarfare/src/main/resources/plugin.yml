@@ -1,0 +1,17 @@
+name: CODWarfare
+version: ${project.version}
+main: com.vibecraft.codwarfare.CodWarfarePlugin
+api-version: "1.21"
+author: VibeCraft
+description: Call of Duty Warfare mini-game for VibeCraft Network
+depend:
+  - HubCore-BridgeSpigot
+softdepend:
+  - Multiverse-Core
+commands:
+  cod:
+    description: Commandes COD Warfare
+    usage: /cod <join|leave|armory|class|perk|votemap|setspawn|setflag|setlobby|reload|debug>
+permissions:
+  codwarfare.admin:
+    default: op

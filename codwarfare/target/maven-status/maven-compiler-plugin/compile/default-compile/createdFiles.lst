@@ -1,0 +1,17 @@
+com\vibecraft\codwarfare\game\TeamColor.class
+com\vibecraft\codwarfare\storage\LoadoutStorage.class
+com\vibecraft\codwarfare\game\CodGameManager.class
+com\vibecraft\codwarfare\config\MessageConfig.class
+com\vibecraft\codwarfare\game\CodMode.class
+com\vibecraft\codwarfare\game\CodGame.class
+com\vibecraft\codwarfare\storage\MySqlLoadoutStore.class
+com\vibecraft\codwarfare\game\CodGameManager$GrenadeShot.class
+com\vibecraft\codwarfare\storage\LoadoutStore.class
+com\vibecraft\codwarfare\game\CodArena.class
+com\vibecraft\codwarfare\storage\MySqlLoadoutStore$Loadout.class
+com\vibecraft\codwarfare\config\ArenaConfig.class
+com\vibecraft\codwarfare\game\WeaponShot.class
+com\vibecraft\codwarfare\integration\MultiverseWorldResolver.class
+com\vibecraft\codwarfare\game\GameState.class
+com\vibecraft\codwarfare\listeners\PlayerListener.class
+com\vibecraft\codwarfare\CodWarfarePlugin.class
